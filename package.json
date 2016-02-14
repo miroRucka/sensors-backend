@@ -1,0 +1,25 @@
+{
+  "name": "sensors",
+  "description": "web application for temperature and humidity rest api",
+  "author": "Miroslav Rucka",
+  "version": "0.0.1",
+  "repository": {
+    "type": "github",
+    "url": "git@github.com:miroRucka/sensors-backend.git"
+  },
+  "scripts": {
+    "start": "app.js"
+  },
+  "dependencies": {
+    "express": "4.13.4",
+    "mongoose": "4.4.3",
+    "lodash": "4.3.0",
+    "winston": "2.1.1",
+    "promise": "7.0.3",
+    "body-parser": "1.15.0"
+  },
+  "keywords": [
+    "dht11, temperature, humidity, service"
+  ],
+  "engine": "node >= 0.10.25"
+}
