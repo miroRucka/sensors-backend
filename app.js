@@ -52,18 +52,29 @@ router.get('/', function (req, res) {
 });
 
 router.get('/sensors', function (req, res) {
-    sensorService.find().then(function (data) {
+    var ok = function (data) {
         res.json(data);
-    });
+    };
+    var err = function (err) {
+        logger.error(err);
+        res.json({message: 'save err ' + err});
+    };
+    sensorService.find().then(ok, err);
 });
 
 router.post('/sensors', function (req, res) {
     var sensors = req.body;
     logger.info('sensors data', sensors);
-    sensorService.save(sensors).then(function (result) {
-        logger.info('result saving process...', result);
-    });
-    res.json({message: 'hooray! welcome to our api!'});
+    var ok = function (result) {
+        logger.info('result saving process... ok');
+        res.json({message: 'save ok '});
+    };
+    var err = function (err) {
+        logger.error(err);
+        res.json({message: 'save err ' + err});
+    };
+    sensorService.save(sensors).then(ok, err);
+
 });
 
 app.use('/api', router);
