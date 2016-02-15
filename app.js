@@ -19,7 +19,8 @@ expressConfig(app);
  * declare service for db operation
  * @type {exports}
  */
-require('./service/mongoService').service(mongoose).connect();
+var dev = process.argv[2];
+require('./service/mongoService').service(mongoose).connect(dev);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
@@ -80,4 +81,4 @@ router.post('/sensors', function (req, res) {
 app.use('/api', router);
 
 
-logger.info("our web server started, congratulation and have a nice day for every one - port:" + port);
+logger.info("our web server started, congratulation and have a nice day for every one - port:" + port + " enviroment develop? " + dev);

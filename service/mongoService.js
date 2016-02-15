@@ -1,3 +1,5 @@
+var _ = require('lodash');
+var logger = require('../config/logging');
 /**
  * horske.info
  * database service
@@ -5,41 +7,13 @@
  */
 module.exports.service = function service(mongoose) {
 
-    var _isDev = function () {
-        return true;
-    };
-
-    var _getMongoConfig = function () {
-        if (process.env.VCAP_SERVICES) {
-            var env = JSON.parse(process.env.VCAP_SERVICES);
-            return env['mongodb-1.8'][0]['credentials'];
-        }
-        return {
-            "hostname": _isDev() ? "virtual" : "localhost",
-            "port": _isDev() ? 44 : 27017,
-            "username": "admin",
-            "password": "DT3EK93t",
-            "name": "",
-            "db": "sensors"
-        }
-    };
-
-
-    var _mongoUrl = function () {
-        var obj = _getMongoConfig();
-        obj.hostname = (obj.hostname || 'localhost');
-        obj.port = (obj.port || 27017);
-        obj.db = (obj.db || 'test');
-        if (obj.username && obj.password) {
-            return "mongodb://" + obj.username + ":" + obj.password + "@" + obj.hostname + ":" + obj.port + "/" + obj.db;
-        }
-        else {
-            return "mongodb://" + obj.hostname + ":" + obj.port + "/" + obj.db;
-        }
-    };
-
-    var _connect = function () {
-        return mongoose.connect(_mongoUrl());
+    var _connect = function (env) {
+        var _isDev = _.isUndefined(env) ? true : env === 'dev';
+        var host = Boolean(_isDev) ? "virtual" : "localhost";
+        var port =  Boolean(_isDev) ? 44 : 27017;
+        var url = "mongodb://admin:DT3EK93t@" + host + ":" + port + "/sensors";
+        logger.info('db connection url', url);
+        return mongoose.connect(url);
     };
 
     var _disconnect = function (cb) {
