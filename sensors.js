@@ -48,21 +48,29 @@ process.on('uncaughtException', function (err) {
  */
 var router = express.Router();
 
-var securityFilter = function(req, res, next) {
+var securityFilter = function (req, res, next) {
     var auth = req.headers['authorization'];
-    if (auth && auth === config.auth) {
-        next(); // allow the next route to run
+    if (env === 'dev') {
+        next();
+    } else if (auth && auth === config.auth) {
+        next();
     } else {
-        // require the user to log in
         res.send(401);
     }
 };
+var DefaultResponse = function (res) {
+    DefaultResponse.prototype.ok = function (data) {
+        res.json(data);
+    };
+    DefaultResponse.prototype.err = function (err) {
+        logger.error(err);
+        res.json({message: 'err ' + err});
+    };
+};
 
-// Automatically apply the `securityFilter` middleware to all
-// routes starting with `/`
-router.all("/*", securityFilter, function(req, res, next) {
-    next(); // if the middleware allowed us to get here,
-            // just move on to the next route handler
+
+router.all("/*", securityFilter, function (req, res, next) {
+    next();
 });
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
@@ -71,14 +79,28 @@ router.get('/', function (req, res) {
 });
 
 router.get('/sensors', function (req, res) {
-    var ok = function (data) {
-        res.json(data);
-    };
-    var err = function (err) {
-        logger.error(err);
-        res.json({message: 'save err ' + err});
-    };
-    sensorService.find().then(ok, err);
+    var response = new DefaultResponse(res);
+    sensorService.find().then(response.ok, response.err);
+});
+
+router.get('/sensors/last', function (req, res) {
+    var response = new DefaultResponse(res);
+    sensorService.findLast().then(response.ok, response.err);
+});
+
+router.get('/sensors/today', function (req, res) {
+    var response = new DefaultResponse(res);
+    sensorService.findToday().then(response.ok, response.err);
+});
+
+router.get('/sensors/month', function (req, res) {
+    var response = new DefaultResponse(res);
+    sensorService.findMonth().then(response.ok, response.err);
+});
+
+router.get('/sensors/count', function (req, res) {
+    var response = new DefaultResponse(res);
+    sensorService.count().then(response.ok, response.err);
 });
 
 router.post('/sensors', function (req, res) {
@@ -88,11 +110,8 @@ router.post('/sensors', function (req, res) {
         logger.info('result saving process... ok');
         res.json({message: 'save ok '});
     };
-    var err = function (err) {
-        logger.error(err);
-        res.json({message: 'save err ' + err});
-    };
-    sensorService.save(sensors).then(ok, err);
+    var response = new DefaultResponse(res);
+    sensorService.save(sensors).then(ok, response.err);
 
 });
 
