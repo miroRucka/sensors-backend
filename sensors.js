@@ -7,6 +7,7 @@ var server = http.createServer(app);
 var logger = require('./config/logging');
 var port = 8085;
 var sensorService = require("./service/sensorsService")();
+var config = require('./config/sensors.json');
 
 server.listen(port);
 
@@ -19,8 +20,8 @@ expressConfig(app);
  * declare service for db operation
  * @type {exports}
  */
-var dev = process.argv[2];
-require('./service/mongoService').service(mongoose).connect(dev);
+var env = process.argv[2];
+require('./service/mongoService').service(mongoose).connect(env);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
@@ -46,6 +47,23 @@ process.on('uncaughtException', function (err) {
  * restfull api
  */
 var router = express.Router();
+
+var securityFilter = function(req, res, next) {
+    var auth = req.headers['authorization'];
+    if (auth && auth === config.auth) {
+        next(); // allow the next route to run
+    } else {
+        // require the user to log in
+        res.send(401);
+    }
+};
+
+// Automatically apply the `securityFilter` middleware to all
+// routes starting with `/`
+router.all("/*", securityFilter, function(req, res, next) {
+    next(); // if the middleware allowed us to get here,
+            // just move on to the next route handler
+});
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', function (req, res) {
@@ -81,4 +99,4 @@ router.post('/sensors', function (req, res) {
 app.use('/api', router);
 
 
-logger.info("our web server started, congratulation and have a nice day for every one - port:" + port + " enviroment develop? " + dev);
+logger.info("our web server started, congratulation and have a nice day for every one - port:" + port + " enviroment develop? " + env);
