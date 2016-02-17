@@ -5,7 +5,7 @@ var expressConfig = require('./config/express');
 var http = require('http');
 var server = http.createServer(app);
 var logger = require('./config/logging');
-var port = 8082;
+var port = 8081;
 var sensorService = require("./service/sensorsService")();
 var config = require('./config/sensors.json');
 
