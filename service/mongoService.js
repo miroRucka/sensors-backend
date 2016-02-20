@@ -13,7 +13,10 @@ module.exports.service = function service(mongoose) {
         var port =  Boolean(_isDev) ? 44 : 27017;
         var url = "mongodb://admin:DT3EK93t@" + host + ":" + port + "/sensors";
         logger.info('db connection url', url);
-        return mongoose.connect(url);
+        return mongoose.connect(url, {
+            server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } },
+            replset: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } }
+        });
     };
 
     var _disconnect = function (cb) {
