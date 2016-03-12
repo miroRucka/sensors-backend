@@ -11,7 +11,6 @@ var logger = require('../config/logging');
 module.exports = function () {
 
     var _find = function _find() {
-        logger.info('sensorsService#find()');
         return new Promise(function (resolve, reject) {
             Sensors.find({}, {}, {sort: {'timestamp': -1}}, function (err, data) {
                 if (err) {
@@ -24,7 +23,6 @@ module.exports = function () {
     };
 
     var _findLast = function _findLast() {
-        logger.info('sensorsService#findLast()');
         return new Promise(function (resolve, reject) {
             Sensors.find({}, {}, {sort: {'timestamp': -1}, limit: 1}, function (err, data) {
                 if (err) {
@@ -36,8 +34,31 @@ module.exports = function () {
         });
     };
 
+    var _find12Hour = function _find12Hour() {
+        var date = new Date();
+        return new Promise(function (resolve, reject) {
+            var _start = function () {
+                var d = new Date();
+                d.setHours(date.getHours() - 12);
+                return d;
+            };
+            var _end = function () {
+                return date;
+            };
+            var query = {
+                timestamp: {'$gte': _start(), '$lt': _end()}
+            };
+            Sensors.find(query, {}, {sort: {'timestamp': -1}}, function (err, data) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(data);
+                }
+            });
+        });
+    };
+
     var _findToday = function _findToday() {
-        logger.info('sensorsService#findToday()');
         return new Promise(function (resolve, reject) {
             var _start = function () {
                 var d = new Date();
@@ -63,7 +84,6 @@ module.exports = function () {
     };
 
     var _findMonth = function _findMonth() {
-        logger.info('sensorsService#findMonth()');
         return new Promise(function (resolve, reject) {
             var date = new Date(), y = date.getFullYear(), m = date.getMonth();
             var _start = function () {
@@ -90,7 +110,6 @@ module.exports = function () {
     };
 
     var _save = function (newSensorsData) {
-        logger.info('sensorsService#save()');
         return new Promise(function (resolve, reject) {
             new Sensors(newSensorsData).save(function (err, data) {
                 if (err) {
@@ -103,7 +122,6 @@ module.exports = function () {
     };
 
     var _count = function _count() {
-        logger.info('sensorsService#count()');
         return new Promise(function (resolve, reject) {
             Sensors.count({}, function (err, count) {
                 if (err) {
@@ -119,6 +137,7 @@ module.exports = function () {
         save: _save,
         find: _find,
         findLast: _findLast,
+        find12Hour: _find12Hour,
         findToday: _findToday,
         findMonth: _findMonth,
         count: _count

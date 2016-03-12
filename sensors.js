@@ -88,6 +88,11 @@ router.get('/sensors/last', function (req, res) {
     sensorService.findLast().then(response.ok, response.err);
 });
 
+router.get('/sensors/last/12hour', function (req, res) {
+    var response = new DefaultResponse(res);
+    sensorService.find12Hour().then(response.ok, response.err);
+});
+
 router.get('/sensors/today', function (req, res) {
     var response = new DefaultResponse(res);
     sensorService.findToday().then(response.ok, response.err);
