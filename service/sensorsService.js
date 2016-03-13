@@ -142,8 +142,9 @@ module.exports = function () {
         };
         var chartDataLength = getNotEmptyLength(data);
         var mod = chartDataLength > maxItem ? (chartDataLength / maxItem) : 0;
+        mod = Math.round(mod);
         _.each(data, function (item, index) {
-            var canPush = mod === 0 || (index % mod) < 1;
+            var canPush = mod === 0 || (index % mod) == 0;
             if (canPush) {
                 result.push(item);
             }
