@@ -136,14 +136,14 @@ module.exports = function () {
     var _reduceData = function (data, maxItem) {
         var result = [];
         var getNotEmptyLength = function (chartData) {
-            return !_exists(chartData) ? _.filter(chartData, function (item) {
+            return _exists(chartData) ? _.filter(chartData, function (item) {
                 return _exists(item.pressure) && _exists(item.humidity) && _exists(item.temperature)
             }).length : 0;
         };
         var chartDataLength = getNotEmptyLength(data);
         var mod = chartDataLength > maxItem ? (chartDataLength / maxItem) : 0;
         _.each(data, function (item, index) {
-            var canPush = mod === 0 || (index % mod) == 0;
+            var canPush = mod === 0 || (index % mod) < 1;
             if (canPush) {
                 result.push(item);
             }
