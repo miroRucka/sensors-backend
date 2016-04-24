@@ -12,11 +12,11 @@ module.exports = function () {
 
     var _find = function _find() {
         return new Promise(function (resolve, reject) {
-            Sensors.find({}, {}, {sort: {'timestamp': -1}}, function (err, data) {
+            Sensors.find({}, {}, {}, function (err, data) {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(data);
+                    resolve(_.orderBy(data, ['timestamp'], ['desc']));
                 }
             });
         });
