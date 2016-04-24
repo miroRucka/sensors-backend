@@ -78,10 +78,11 @@ router.get('/', function (req, res) {
     res.json({message: 'hooray! welcome to our api!'});
 });
 
-router.get('/sensors', function (req, res) {
-    var response = new DefaultResponse(res);
-    sensorService.find().then(response.ok, response.err);
-});
+//all data disabled
+//router.get('/sensors', function (req, res) {
+//    var response = new DefaultResponse(res);
+//    sensorService.find().then(response.ok, response.err);
+//});
 
 router.get('/sensors/last', function (req, res) {
     var response = new DefaultResponse(res);
