@@ -153,17 +153,17 @@ module.exports = function () {
             return _exists(item.pressure) && _exists(item.humidity) && _exists(item.temperature) && item.humidity < 100;
         });
         return {
-            pressure: _.meanBy(data, function (o) {
+            pressure: _.meanBy(filtrated, function (o) {
                 return o.pressure;
             }),
-            humidity: _.meanBy(data, function (o) {
+            humidity: _.meanBy(filtrated, function (o) {
                 return o.humidity;
             }),
-            temperature: [_.meanBy(data, function (o) {
+            temperature: [_.meanBy(filtrated, function (o) {
                 return o.temperature[0].value;
-            }), _.meanBy(data, function (o) {
+            }), _.meanBy(filtrated, function (o) {
                 return o.temperature[1].value;
-            }), _.meanBy(data, function (o) {
+            }), _.meanBy(filtrated, function (o) {
                 return o.temperature[2].value;
             })]
         }
