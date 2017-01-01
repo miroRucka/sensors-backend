@@ -159,13 +159,7 @@ module.exports = function () {
             humidity: _.meanBy(filtrated, function (o) {
                 return o.humidity;
             }),
-            temperature: [_.meanBy(filtrated, function (o) {
-                return o.temperature[0].value;
-            }), _.meanBy(filtrated, function (o) {
-                return o.temperature[1].value;
-            }), _.meanBy(filtrated, function (o) {
-                return o.temperature[2].value;
-            })]
+            temperature: []
         }
     };
 
