@@ -109,6 +109,21 @@ module.exports = function () {
         });
     };
 
+    var _findTimeIntervalAvg = function (start, end) {
+        return new Promise(function (resolve, reject) {
+            var query = {
+                timestamp: {'$gte': new Date(start), '$lt': new Date(end)}
+            };
+            Sensors.find(query, {}, {}, function (err, data) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(_avgData(data));
+                }
+            });
+        });
+    };
+
     var _save = function (newSensorsData) {
         return new Promise(function (resolve, reject) {
             new Sensors(newSensorsData).save(function (err, data) {
@@ -131,6 +146,27 @@ module.exports = function () {
                 }
             });
         });
+    };
+
+    var _avgData = function (data) {
+        var filtrated = _.filter(data, function (item) {
+            return _exists(item.pressure) && _exists(item.humidity) && _exists(item.temperature) && item.humidity < 100;
+        });
+        return {
+            pressure: _.meanBy(data, function (o) {
+                return o.pressure;
+            }),
+            humidity: _.meanBy(data, function (o) {
+                return o.humidity;
+            }),
+            temperature: [_.meanBy(data, function (o) {
+                return o.temperature[0].value;
+            }), _.meanBy(data, function (o) {
+                return o.temperature[1].value;
+            }), _.meanBy(data, function (o) {
+                return o.temperature[2].value;
+            })]
+        }
     };
 
     var _reduceData = function (data, maxItem) {
@@ -163,6 +199,7 @@ module.exports = function () {
         find12Hour: _find12Hour,
         findToday: _findToday,
         findMonth: _findMonth,
+        findTimeIntervalAvg: _findTimeIntervalAvg,
         count: _count
     }
 };

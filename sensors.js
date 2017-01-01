@@ -109,6 +109,13 @@ router.get('/sensors/count', function (req, res) {
     sensorService.count().then(response.ok, response.err);
 });
 
+router.get('/sensors/avg/time-interval', function (req, res) {
+    logger.debug('start ' + new Date(req.query.start));
+    logger.debug('end ' + new Date(req.query.end));
+    var response = new DefaultResponse(res);
+    sensorService.findTimeIntervalAvg(req.query.start, req.query.end).then(response.ok, response.err);
+});
+
 router.post('/sensors', function (req, res) {
     var sensors = req.body;
     logger.info('sensors data', sensors);
