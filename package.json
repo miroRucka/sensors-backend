@@ -13,7 +13,7 @@
   "dependencies": {
     "express": "4.13.4",
     "mongoose": "4.4.3",
-    "lodash": "4.3.0",
+    "lodash": "4.17.4",
     "winston": "2.1.1",
     "promise": "7.0.3",
     "body-parser": "1.15.0"
