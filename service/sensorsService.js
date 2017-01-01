@@ -118,7 +118,9 @@ module.exports = function () {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(_avgData(data));
+                    var avgData = _avgData(data);
+                    logger.debug(avgData);
+                    resolve(avgData);
                 }
             });
         });
@@ -153,6 +155,7 @@ module.exports = function () {
             return _exists(item.pressure) && _exists(item.humidity) && _exists(item.temperature) && item.humidity < 100;
         });
         return {
+            count: filtrated.length,
             pressure: _.meanBy(filtrated, function (o) {
                 return o.pressure;
             }),
