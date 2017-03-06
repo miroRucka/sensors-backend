@@ -162,7 +162,8 @@ module.exports = function () {
             humidity: _.meanBy(filtrated, function (o) {
                 return o.humidity;
             }),
-            temperature: []
+            temperature: [],
+            full: filtrated
         }
     };
 
