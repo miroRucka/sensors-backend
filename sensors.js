@@ -110,6 +110,8 @@ router.get('/sensors/count', function (req, res) {
 });
 
 router.get('/sensors/avg/time-interval', function (req, res) {
+    logger.debug('start raw' + new Date(req.query.start));
+    logger.debug('end raw' + new Date(req.query.end));
     logger.debug('start ' + new Date(req.query.start));
     logger.debug('end ' + new Date(req.query.end));
     var response = new DefaultResponse(res);
