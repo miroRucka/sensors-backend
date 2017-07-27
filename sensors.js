@@ -8,6 +8,7 @@ var logger = require('./config/logging');
 var port = 8082;
 var sensorService = require("./service/sensorsService")();
 var config = require('./config/sensors.json');
+var exists = require('./utils/exists');
 
 server.listen(port);
 
@@ -55,9 +56,16 @@ var securityFilter = function (req, res, next) {
     } else if (auth && auth === config.auth) {
         next();
     } else {
-        res.send(401);
+        res.sendStatus(401);
     }
 };
+
+var pointIdValidator = function (req, res) {
+    if (!exists(req.params) || !exists(req.params.pointId)) {
+        //Unprocessable Entity
+        res.sendStatus(422);
+    }
+}
 var DefaultResponse = function (res) {
     DefaultResponse.prototype.ok = function (data) {
         res.json(data);
@@ -78,30 +86,39 @@ router.get('/', function (req, res) {
     res.json({message: 'hooray! welcome to our api!'});
 });
 
-//all data disabled
-//router.get('/sensors', function (req, res) {
-//    var response = new DefaultResponse(res);
-//    sensorService.find().then(response.ok, response.err);
-//});
-
-router.get('/sensors/last', function (req, res) {
+router.get('/sensors/:pointId/last', function (req, res) {
+    pointIdValidator(req, res);
     var response = new DefaultResponse(res);
-    sensorService.findLast().then(response.ok, response.err);
+    var pointId = req.params.pointId;
+    sensorService.findLast(pointId).then(response.ok, response.err);
 });
 
-router.get('/sensors/last/12hour', function (req, res) {
+router.get('/sensors/:pointId/last/12hour', function (req, res) {
+    pointIdValidator(req, res);
     var response = new DefaultResponse(res);
-    sensorService.find12Hour().then(response.ok, response.err);
+    var pointId = req.params.pointId;
+    sensorService.find12Hour(pointId).then(response.ok, response.err);
 });
 
-router.get('/sensors/today', function (req, res) {
+router.get('/sensors/:pointId/today', function (req, res) {
+    pointIdValidator(req, res);
     var response = new DefaultResponse(res);
-    sensorService.findToday().then(response.ok, response.err);
+    var pointId = req.params.pointId;
+    sensorService.findToday(pointId).then(response.ok, response.err);
 });
 
-router.get('/sensors/month', function (req, res) {
+router.get('/sensors/:pointId/month', function (req, res) {
+    pointIdValidator(req, res);
     var response = new DefaultResponse(res);
-    sensorService.findMonth().then(response.ok, response.err);
+    var pointId = req.params.pointId;
+    sensorService.findMonth(pointId).then(response.ok, response.err);
+});
+
+router.get('/sensors/:pointId/count', function (req, res) {
+    pointIdValidator(req, res);
+    var response = new DefaultResponse(res);
+    var pointId = req.params.pointId;
+    sensorService.count(pointId).then(response.ok, response.err);
 });
 
 router.get('/sensors/count', function (req, res) {
@@ -109,18 +126,25 @@ router.get('/sensors/count', function (req, res) {
     sensorService.count().then(response.ok, response.err);
 });
 
-router.get('/sensors/avg/time-interval', function (req, res) {
+router.get('/sensors/all-points', function (req, res) {
+    var response = new DefaultResponse(res);
+    response.ok("all-data");
+});
+
+router.get('/sensors/:pointId/avg/time-interval', function (req, res) {
     logger.debug('start raw' + new Date(req.query.start));
     logger.debug('end raw' + new Date(req.query.end));
     logger.debug('start ' + new Date(req.query.start));
     logger.debug('end ' + new Date(req.query.end));
+    pointIdValidator(req, res);
     var response = new DefaultResponse(res);
-    sensorService.findTimeIntervalAvg(req.query.start, req.query.end).then(response.ok, response.err);
+    var pointId = req.params.pointId;
+    sensorService.findTimeIntervalAvg(req.query.start, req.query.end, pointId).then(response.ok, response.err);
 });
 
 router.post('/sensors', function (req, res) {
     var sensors = req.body;
-    logger.info('sensors data', sensors);
+    console.log(sensors);
     var ok = function (result) {
         logger.info('result saving process... ok');
         res.json({message: 'save ok '});

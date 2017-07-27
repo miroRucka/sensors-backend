@@ -7,6 +7,7 @@ var Sensors = require('../models/sensorsModel').sensorsModel;
 var Promise = require("promise");
 var _ = require('lodash');
 var logger = require('../config/logging');
+var exists = require('../utils/exists');
 
 module.exports = function () {
 
@@ -22,9 +23,10 @@ module.exports = function () {
         });
     };
 
-    var _findLast = function _findLast() {
+    var _findLast = function _findLast(pointId) {
         return new Promise(function (resolve, reject) {
-            Sensors.find({}, {}, {sort: {'timestamp': -1}, limit: 1}, function (err, data) {
+            var query = {locationId: {'$eq': pointId}};
+            Sensors.find(query, {}, {sort: {'timestamp': -1}, limit: 1}, function (err, data) {
                 if (err) {
                     reject(err);
                 } else {
@@ -34,7 +36,7 @@ module.exports = function () {
         });
     };
 
-    var _find12Hour = function _find12Hour() {
+    var _find12Hour = function _find12Hour(pointId) {
         var date = new Date();
         return new Promise(function (resolve, reject) {
             var _start = function () {
@@ -46,7 +48,8 @@ module.exports = function () {
                 return date;
             };
             var query = {
-                timestamp: {'$gte': _start(), '$lt': _end()}
+                timestamp: {'$gte': _start(), '$lt': _end()},
+                locationId: {'$eq': pointId}
             };
             Sensors.find(query, {}, {sort: {'timestamp': -1}}, function (err, data) {
                 if (err) {
@@ -58,7 +61,7 @@ module.exports = function () {
         });
     };
 
-    var _findToday = function _findToday() {
+    var _findToday = function _findToday(pointId) {
         return new Promise(function (resolve, reject) {
             var _start = function () {
                 var d = new Date();
@@ -71,7 +74,8 @@ module.exports = function () {
                 return d;
             };
             var query = {
-                timestamp: {'$gte': _start(), '$lt': _end()}
+                timestamp: {'$gte': _start(), '$lt': _end()},
+                locationId: {'$eq': pointId}
             };
             Sensors.find(query, {}, {sort: {'timestamp': -1}}, function (err, data) {
                 if (err) {
@@ -83,7 +87,7 @@ module.exports = function () {
         });
     };
 
-    var _findMonth = function _findMonth() {
+    var _findMonth = function _findMonth(pointId) {
         return new Promise(function (resolve, reject) {
             var date = new Date(), y = date.getFullYear(), m = date.getMonth();
             var _start = function () {
@@ -97,7 +101,8 @@ module.exports = function () {
                 return d;
             };
             var query = {
-                timestamp: {'$gte': _start(), '$lt': _end()}
+                timestamp: {'$gte': _start(), '$lt': _end()},
+                locationId: {'$eq': pointId}
             };
             Sensors.find(query, {}, {sort: {'timestamp': -1}}, function (err, data) {
                 if (err) {
@@ -109,10 +114,11 @@ module.exports = function () {
         });
     };
 
-    var _findTimeIntervalAvg = function (start, end) {
+    var _findTimeIntervalAvg = function (start, end, pointId) {
         return new Promise(function (resolve, reject) {
             var query = {
-                timestamp: {'$gte': new Date(start), '$lt': new Date(end)}
+                timestamp: {'$gte': new Date(start), '$lt': new Date(end)},
+                locationId: {'$eq': pointId}
             };
             Sensors.find(query, {}, {}, function (err, data) {
                 if (err) {
@@ -138,9 +144,12 @@ module.exports = function () {
         });
     };
 
-    var _count = function _count() {
+    var _count = function _count(pointId) {
         return new Promise(function (resolve, reject) {
-            Sensors.count({}, function (err, count) {
+            var query = exists(pointId) ? {
+                locationId: {'$eq': pointId}
+            } : {};
+            Sensors.count(query, function (err, count) {
                 if (err) {
                     reject(err);
                 } else {
@@ -186,9 +195,7 @@ module.exports = function () {
         return result;
     };
 
-    var _exists = function (input) {
-        return !_.isUndefined(input) && !_.isNull(input);
-    };
+    var _exists = exists
 
     return {
         save: _save,
