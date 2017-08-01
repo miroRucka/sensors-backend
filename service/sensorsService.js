@@ -7,6 +7,7 @@ var Sensors = require('../models/sensorsModel').sensorsModel;
 var Promise = require("promise");
 var _ = require('lodash');
 var logger = require('../config/logging');
+var messages = require('../config/messages');
 var exists = require('../utils/exists');
 
 module.exports = function () {
@@ -195,6 +196,39 @@ module.exports = function () {
         return result;
     };
 
+    var _findAllPointIds = function (cache) {
+        return new Promise(function (resolve, reject) {
+            cache.get("allPointsId", function (err, value) {
+                if (!_.isUndefined(value) && !_.isEmpty(value) && !err) {
+                    resolve(value);
+                } else {
+                    Sensors.find().distinct('locationId', function (err, data) {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            var result = _getLocalizedPointId(data);
+                            cache.set("allPointsId", result, 600);
+                            resolve(result);
+                        }
+                    });
+                }
+            });
+        });
+    };
+
+    var _getLocalizedPointId = function (pointIds) {
+        var result = [];
+        _.each(pointIds, function (pointId) {
+            var localized = _.isUndefined(messages[pointId]) ? pointId : messages[pointId];
+            var newPointId = {
+                id: pointId,
+                localized: localized
+            };
+            result.push(newPointId);
+        });
+        return result;
+    };
+
     var _exists = exists
 
     return {
@@ -205,6 +239,7 @@ module.exports = function () {
         findToday: _findToday,
         findMonth: _findMonth,
         findTimeIntervalAvg: _findTimeIntervalAvg,
-        count: _count
+        count: _count,
+        findAllPointIds: _findAllPointIds
     }
 };

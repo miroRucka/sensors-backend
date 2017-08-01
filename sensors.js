@@ -9,6 +9,8 @@ var port = 8082;
 var sensorService = require("./service/sensorsService")();
 var config = require('./config/sensors.json');
 var exists = require('./utils/exists');
+var NodeCache = require("node-cache");
+var cache = new NodeCache();
 
 server.listen(port);
 
@@ -128,7 +130,7 @@ router.get('/sensors/count', function (req, res) {
 
 router.get('/sensors/all-points', function (req, res) {
     var response = new DefaultResponse(res);
-    response.ok("all-data");
+    sensorService.findAllPointIds(cache).then(response.ok, response.err);
 });
 
 router.get('/sensors/:pointId/avg/time-interval', function (req, res) {
