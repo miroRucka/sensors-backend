@@ -11,6 +11,12 @@ var config = require('./config/sensors.json');
 var exists = require('./utils/exists');
 var NodeCache = require("node-cache");
 var cache = new NodeCache();
+var stompService = require('./service/stompService')();
+
+var stompMessageClient;
+stompService.connect(function (sessionId, client) {
+    stompMessageClient = client;
+});
 
 server.listen(port);
 
@@ -40,11 +46,19 @@ process.on('SIGINT', function () {
         logger.info('Mongoose default connection disconnected through app termination');
         process.exit(0);
     });
+    stompMessageClient.disconnect();
 });
 process.on('uncaughtException', function (err) {
     logger.error('Caught exception: ', err);
 });
 
+/**
+ * test connect activemq via stomp...
+ *
+ */
+setTimeout(function () {
+    stompMessageClient.publish('/queue/take-photo', 'Oh herrow');
+}, 3000);
 
 /**
  * restfull api
@@ -134,10 +148,6 @@ router.get('/sensors/all-points', function (req, res) {
 });
 
 router.get('/sensors/:pointId/avg/time-interval', function (req, res) {
-    logger.debug('start raw' + new Date(req.query.start));
-    logger.debug('end raw' + new Date(req.query.end));
-    logger.debug('start ' + new Date(req.query.start));
-    logger.debug('end ' + new Date(req.query.end));
     pointIdValidator(req, res);
     var response = new DefaultResponse(res);
     var pointId = req.params.pointId;
