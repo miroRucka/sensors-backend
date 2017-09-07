@@ -7,11 +7,15 @@ var server = http.createServer(app);
 var logger = require('./config/logging');
 var port = 8082;
 var sensorService = require("./service/sensorsService")();
+var photoService = require("./service/photoService")();
 var config = require('./config/sensors.json');
 var exists = require('./utils/exists');
 var NodeCache = require("node-cache");
 var cache = new NodeCache();
 var stompService = require('./service/stompService')();
+var multer = require('multer');
+var upload = multer({dest: 'uploads/'});
+var fs = require('fs');
 
 var stompMessageClient;
 stompService.connect(function (sessionId, client) {
@@ -164,6 +168,23 @@ router.post('/sensors', function (req, res) {
     var response = new DefaultResponse(res);
     sensorService.save(sensors).then(ok, response.err);
 
+});
+
+router.put("/sensors/photo/:id", upload.single('file'), function (req, res) {
+    fs.readFile(req.file.path, function (err, data) {
+        var ok = function (result) {
+            logger.info('photo saving process... ok');
+            res.json({message: 'photo ok '});
+        };
+        var photo = {
+            locationId: req.params.id,
+            photo: {
+                data: data
+            }
+        };
+        var response = new DefaultResponse(res);
+        photoService.save(photo, req.params.id).then(ok, response.err);
+    });
 });
 
 app.use('/api', router);
