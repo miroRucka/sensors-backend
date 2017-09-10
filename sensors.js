@@ -22,6 +22,7 @@ stompService.connect(function (sessionId, client) {
     stompMessageClient = client;
 });
 
+
 server.listen(port);
 
 /**
@@ -55,14 +56,6 @@ process.on('SIGINT', function () {
 process.on('uncaughtException', function (err) {
     logger.error('Caught exception: ', err);
 });
-
-/**
- * test connect activemq via stomp...
- *
- */
-setTimeout(function () {
-    stompMessageClient.publish('/queue/take-photo', 'Oh herrow');
-}, 3000);
 
 /**
  * restfull api
@@ -111,6 +104,12 @@ router.get('/sensors/:pointId/last', function (req, res) {
     var response = new DefaultResponse(res);
     var pointId = req.params.pointId;
     sensorService.findLast(pointId).then(response.ok, response.err);
+});
+
+/*@depricated*/
+router.get('/sensors/last', function (req, res) {
+    var response = new DefaultResponse(res);
+    sensorService.findLast("location_001").then(response.ok, response.err);
 });
 
 router.get('/sensors/:pointId/last/12hour', function (req, res) {
@@ -163,28 +162,51 @@ router.post('/sensors', function (req, res) {
     console.log(sensors);
     var ok = function (result) {
         logger.info('result saving process... ok');
-        res.json({message: 'save ok '});
+        res.json({message: 'save ok'});
     };
     var response = new DefaultResponse(res);
     sensorService.save(sensors).then(ok, response.err);
 
 });
 
-router.put("/sensors/photo/:id", upload.single('file'), function (req, res) {
+router.put("/sensors/photo/:pointId", upload.single('file'), function (req, res) {
+    pointIdValidator(req, res);
     fs.readFile(req.file.path, function (err, data) {
-        var ok = function (result) {
+        var ok = function (data) {
             logger.info('photo saving process... ok');
-            res.json({message: 'photo ok '});
+            res.json({message: 'photo with id ' + req.params.pointId + ' saved.'});
+            data.photo = {};
+            stompMessageClient.publish('/queue/photo-uploaded', JSON.stringify(data));
+            stompMessageClient.publish('/topic/photo-uploaded', JSON.stringify(data));
         };
-        var photo = {
-            locationId: req.params.id,
+        photoService.save({
+            locationId: req.params.pointId,
             photo: {
                 data: data
             }
-        };
-        var response = new DefaultResponse(res);
-        photoService.save(photo, req.params.id).then(ok, response.err);
+        }).then(ok, new DefaultResponse(res).err);
     });
+});
+
+router.get('/sensors/photo/:pointId/last', function (req, res) {
+    pointIdValidator(req, res);
+    var response = new DefaultResponse(res);
+    var pointId = req.params.pointId;
+    var ok = function (data) {
+        res.json(data[0]);
+    };
+    photoService.findLast(pointId).then(ok, response.err);
+});
+
+router.get('/sensors/photo/:photoId', function (req, res) {
+    var response = new DefaultResponse(res);
+    var photoId = req.params.photoId;
+    logger.info('read photo with id ' + photoId);
+    var ok = function (data) {
+        res.writeHead(200, {'Content-Type': 'image/jpeg'});
+        res.end(data.photo.data);
+    };
+    photoService.readPhoto(photoId).then(ok, response.err);
 });
 
 app.use('/api', router);

@@ -17,6 +17,18 @@ module.exports = function () {
         logger.info('connect to stomp connection url: ', stompUrl, stompPort, ' as user ', user);
         return stompClient.connect(function (sessionId) {
             connectionCb(sessionId, stompClient);
+            stompClient.on("connect", function () {
+                logger.info('client connect');
+            });
+            stompClient.on("reconnect", function () {
+                logger.info('client reconnect');
+            });
+            stompClient.on("error", function (e) {
+                logger.info('client error', e);
+            });
+            stompClient.on("reconnecting", function () {
+                logger.info('reconnecting');
+            });
         });
     };
 
@@ -27,9 +39,16 @@ module.exports = function () {
         stompClient.disconnect(cb);
     };
 
+
+    var _reconnect = function (connectionCb) {
+        _disconnect();
+        _connect(connectionCb);
+    };
+
     return {
         connect: _connect,
-        disconnect: _disconnect
+        disconnect: _disconnect,
+        reconnect: _reconnect
     }
 
 };
