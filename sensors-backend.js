@@ -210,7 +210,6 @@ app.get('/sensors/photo/:photoId', function (req, res) {
     photoService.readPhoto(photoId).then(ok, response.err);
 });
 
-
 app.use('/api', router);
 
 
