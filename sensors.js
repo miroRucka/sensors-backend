@@ -63,6 +63,7 @@ process.on('uncaughtException', function (err) {
 var router = express.Router();
 
 var securityFilter = function (req, res, next) {
+    logger.info('sec...');
     var auth = req.headers['authorization'];
     if (env === 'dev') {
         next();
@@ -198,7 +199,7 @@ router.get('/sensors/photo/:pointId/last', function (req, res) {
     photoService.findLast(pointId).then(ok, response.err);
 });
 
-router.get('/sensors/photo/:photoId', function (req, res) {
+app.get('/sensors/photo/:photoId', function (req, res) {
     var response = new DefaultResponse(res);
     var photoId = req.params.photoId;
     logger.info('read photo with id ' + photoId);
@@ -208,6 +209,7 @@ router.get('/sensors/photo/:photoId', function (req, res) {
     };
     photoService.readPhoto(photoId).then(ok, response.err);
 });
+
 
 app.use('/api', router);
 
