@@ -181,7 +181,7 @@ module.exports = function () {
         var result = [];
         var getNotEmptyLength = function (chartData) {
             return _exists(chartData) ? _.filter(chartData, function (item) {
-                return _exists(item.pressure) && _exists(item.humidity) && _exists(item.temperature)
+                return _exists(item.humidity) && _exists(item.temperature)
             }).length : 0;
         };
         var chartDataLength = getNotEmptyLength(data);
