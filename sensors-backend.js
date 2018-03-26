@@ -19,8 +19,8 @@ var fs = require('fs');
 var Client = require('node-rest-client').Client;
 var client = new Client();
 
-//var ntAddress = "http://barek.ddns.net:8080";
-var ntAddress = "http://192.168.1.25:9615";
+var ntAddress = "http://barek.ddns.net:8080";
+//var ntAddress = "http://192.168.1.25:9615";
 
 
 var stompMessageClient;
