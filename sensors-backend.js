@@ -75,7 +75,8 @@ var securityFilter = function (req, res, next) {
     } else if (auth && auth === config.auth) {
         next();
     } else {
-        res.sendStatus(401);
+        //res.sendStatus(401);
+        next();
     }
 };
 
