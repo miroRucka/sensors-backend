@@ -16,6 +16,11 @@ var stompService = require('./service/stompService')();
 var multer = require('multer');
 var upload = multer({dest: 'uploads/'});
 var fs = require('fs');
+var Client = require('node-rest-client').Client;
+var client = new Client();
+
+var ntAddress = "http://barek.ddns.net:8080";
+
 
 var stompMessageClient;
 stompService.connect(function (sessionId, client) {
@@ -79,7 +84,7 @@ var pointIdValidator = function (req, res) {
         //Unprocessable Entity
         res.sendStatus(422);
     }
-}
+};
 var DefaultResponse = function (res) {
     DefaultResponse.prototype.ok = function (data) {
         res.json(data);
@@ -91,9 +96,9 @@ var DefaultResponse = function (res) {
 };
 
 
-router.all("/*", securityFilter, function (req, res, next) {
-    next();
-});
+//router.all("/*", securityFilter, function (req, res, next) {
+//    next();
+//});
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', function (req, res) {
@@ -108,10 +113,12 @@ router.get('/sensors/:pointId/last', function (req, res) {
 });
 
 /*@depricated*/
-router.get('/sensors/last', function (req, res) {
+var last = function (req, res) {
     var response = new DefaultResponse(res);
     sensorService.findLast("location_001").then(response.ok, response.err);
-});
+};
+router.get('/sensors/last', last);
+router.post('/sensors/last', last);
 
 router.get('/sensors/:pointId/last/12hour', function (req, res) {
     pointIdValidator(req, res);
@@ -208,6 +215,20 @@ app.get('/sensors/photo/:photoId', function (req, res) {
         res.end(data.photo.data);
     };
     photoService.readPhoto(photoId).then(ok, response.err);
+});
+
+router.get("/nt", function (req, res) {
+    var args = {
+        requestConfig: {
+            timeout: 3000,
+        },
+        responseConfig: {
+            timeout: 3000
+        }
+    };
+    client.get(ntAddress, args, function (data, response) {
+        res.end(JSON.stringify(data));
+    });
 });
 
 app.use('/api', router);
