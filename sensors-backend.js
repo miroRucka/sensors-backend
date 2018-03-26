@@ -19,7 +19,8 @@ var fs = require('fs');
 var Client = require('node-rest-client').Client;
 var client = new Client();
 
-var ntAddress = "http://barek.ddns.net:8080";
+//var ntAddress = "http://barek.ddns.net:8080";
+var ntAddress = "http://192.168.1.25:9615";
 
 
 var stompMessageClient;
@@ -220,14 +221,25 @@ app.get('/sensors/photo/:photoId', function (req, res) {
 router.get("/nt", function (req, res) {
     var args = {
         requestConfig: {
-            timeout: 3000,
+            timeout: 3500,
         },
         responseConfig: {
-            timeout: 3000
+            timeout: 3500
         }
     };
-    client.get(ntAddress, args, function (data, response) {
+    var req = client.get(ntAddress, args, function (data, response) {
         res.end(JSON.stringify(data));
+    });
+    req.on('requestTimeout', function (req) {
+        req.abort();
+        res.status(500).send({ error: 'timeout' });
+    });
+
+    req.on('responseTimeout', function (res) {
+        res.status(500).send({ error: 'timeout' });
+    });
+    req.on('error', function (err) {
+        res.status(500).send({ error: 'erro' });
     });
 });
 
