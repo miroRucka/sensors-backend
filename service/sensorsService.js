@@ -56,7 +56,7 @@ module.exports = function () {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(_reduceData(data, 30));
+                    resolve(_reduceData(data, maxData || 30));
                 }
             });
         });
