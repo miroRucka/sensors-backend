@@ -1,0 +1,26 @@
+[
+  {
+    "_id": "5aba8e4a704d812b203a6a77",
+    "pressure": 1010.2038731760807,
+    "light": 0,
+    "humidity": 46,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T18:32:42.556Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 23.6
+      },
+      {
+        "key": "t2",
+        "value": 1.5625
+      },
+      {
+        "key": "t3",
+        "value": 20.600000381469727
+      }
+    ]
+  }
+]

@@ -1,0 +1,842 @@
+[
+  {
+    "_id": "5aba9eb2704d812b203a6a8b",
+    "pressure": 1009.9346966904566,
+    "light": 6,
+    "humidity": 45.5,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T19:42:42.873Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 24.3
+      },
+      {
+        "key": "t2",
+        "value": -0.1875
+      },
+      {
+        "key": "t3",
+        "value": 21.600000381469727
+      }
+    ]
+  },
+  {
+    "_id": "5aba99c6704d812b203a6a85",
+    "pressure": 1010.2145383798484,
+    "light": 0,
+    "humidity": 42.900001525878906,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T19:21:42.049Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 23.8
+      },
+      {
+        "key": "t2",
+        "value": 0.625
+      },
+      {
+        "key": "t3",
+        "value": 21.100000381469727
+      }
+    ]
+  },
+  {
+    "_id": "5aba94da704d812b203a6a7f",
+    "pressure": 1010.2354286464085,
+    "light": 0,
+    "humidity": 43.599998474121094,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T19:00:42.262Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 23.7
+      },
+      {
+        "key": "t2",
+        "value": 0.875
+      },
+      {
+        "key": "t3",
+        "value": 20.899999618530273
+      }
+    ]
+  },
+  {
+    "_id": "5aba8fee704d812b203a6a79",
+    "pressure": 1010.3173713320638,
+    "light": 19,
+    "humidity": 46,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T18:39:42.493Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 23.7
+      },
+      {
+        "key": "t2",
+        "value": 1.8125
+      },
+      {
+        "key": "t3",
+        "value": 20.600000381469727
+      }
+    ]
+  },
+  {
+    "_id": "5aba8b02704d812b203a6a73",
+    "pressure": 1010.0561036573122,
+    "light": 0,
+    "humidity": 45.70000076293945,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T18:18:42.693Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 23.6
+      },
+      {
+        "key": "t2",
+        "value": 1.5625
+      },
+      {
+        "key": "t3",
+        "value": 20.5
+      }
+    ]
+  },
+  {
+    "_id": "5aba8615704d812b203a6a6d",
+    "pressure": 1009.8692516580056,
+    "light": 0,
+    "humidity": 46,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T17:57:41.942Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 23.7
+      },
+      {
+        "key": "t2",
+        "value": 2.125
+      },
+      {
+        "key": "t3",
+        "value": 20.600000381469727
+      }
+    ]
+  },
+  {
+    "_id": "5aba812e704d812b203a6a67",
+    "pressure": 1010.1075029151258,
+    "light": 0,
+    "humidity": 46.099998474121094,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T17:36:46.483Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 23.8
+      },
+      {
+        "key": "t2",
+        "value": 3.0625
+      },
+      {
+        "key": "t3",
+        "value": 20.700000762939453
+      }
+    ]
+  },
+  {
+    "_id": "5aba7c3e704d812b203a6a61",
+    "pressure": 1009.9115488955432,
+    "light": 0,
+    "humidity": 44.599998474121094,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T17:15:42.459Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 24
+      },
+      {
+        "key": "t2",
+        "value": 3.3125
+      },
+      {
+        "key": "t3",
+        "value": 20.799999237060547
+      }
+    ]
+  },
+  {
+    "_id": "5aba7751704d812b203a6a5b",
+    "pressure": 1009.8564316794298,
+    "light": 3,
+    "humidity": 44.5,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T16:54:41.795Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 24.1
+      },
+      {
+        "key": "t2",
+        "value": 3.875
+      },
+      {
+        "key": "t3",
+        "value": 20.899999618530273
+      }
+    ]
+  },
+  {
+    "_id": "5aba7266704d812b203a6a55",
+    "pressure": 1009.8329418466135,
+    "light": 5,
+    "humidity": 43.900001525878906,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T16:33:42.125Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 24.3
+      },
+      {
+        "key": "t2",
+        "value": 4.0625
+      },
+      {
+        "key": "t3",
+        "value": 21.100000381469727
+      }
+    ]
+  },
+  {
+    "_id": "5aba6d79704d812b203a6a4f",
+    "pressure": 1009.6006665673735,
+    "light": 14,
+    "humidity": 44.20000076293945,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T16:12:41.444Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 24.4
+      },
+      {
+        "key": "t2",
+        "value": 4.375
+      },
+      {
+        "key": "t3",
+        "value": 21.100000381469727
+      }
+    ]
+  },
+  {
+    "_id": "5aba688d704d812b203a6a49",
+    "pressure": 1009.6473303068344,
+    "light": 12,
+    "humidity": 43,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T15:51:41.705Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 24.5
+      },
+      {
+        "key": "t2",
+        "value": 4.375
+      },
+      {
+        "key": "t3",
+        "value": 21.299999237060547
+      }
+    ]
+  },
+  {
+    "_id": "5aba63a1704d812b203a6a43",
+    "pressure": 1009.4420216629028,
+    "light": 35,
+    "humidity": 43.900001525878906,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T15:30:41.968Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 24.6
+      },
+      {
+        "key": "t2",
+        "value": 5.75
+      },
+      {
+        "key": "t3",
+        "value": 21.299999237060547
+      }
+    ]
+  },
+  {
+    "_id": "5aba5eb5704d812b203a6a3d",
+    "pressure": 1009.4581037149565,
+    "light": 57,
+    "humidity": 44,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T15:09:41.255Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 24.6
+      },
+      {
+        "key": "t2",
+        "value": 5.9375
+      },
+      {
+        "key": "t3",
+        "value": 21.399999618530273
+      }
+    ]
+  },
+  {
+    "_id": "5aba59c9704d812b203a6a37",
+    "pressure": 1009.5771641358658,
+    "light": 39,
+    "humidity": 44,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T14:48:41.576Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 24.6
+      },
+      {
+        "key": "t2",
+        "value": 5.3125
+      },
+      {
+        "key": "t3",
+        "value": 21.299999237060547
+      }
+    ]
+  },
+  {
+    "_id": "5aba54dc704d812b203a6a31",
+    "pressure": 1009.7120775713074,
+    "light": 43,
+    "humidity": 42.79999923706055,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T14:27:40.905Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 24.7
+      },
+      {
+        "key": "t2",
+        "value": 5.1875
+      },
+      {
+        "key": "t3",
+        "value": 21.299999237060547
+      }
+    ]
+  },
+  {
+    "_id": "5aba4ff1704d812b203a6a2b",
+    "pressure": 1009.7202185397558,
+    "light": 34,
+    "humidity": 43.70000076293945,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T14:06:41.236Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 24.8
+      },
+      {
+        "key": "t2",
+        "value": 5.0625
+      },
+      {
+        "key": "t3",
+        "value": 21.299999237060547
+      }
+    ]
+  },
+  {
+    "_id": "5aba4b05704d812b203a6a25",
+    "pressure": 1009.775675168511,
+    "light": 47,
+    "humidity": 42.29999923706055,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T13:45:41.532Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 24.9
+      },
+      {
+        "key": "t2",
+        "value": 5.75
+      },
+      {
+        "key": "t3",
+        "value": 21.399999618530273
+      }
+    ]
+  },
+  {
+    "_id": "5aba4618704d812b203a6a1f",
+    "pressure": 1009.6688039722079,
+    "light": 142,
+    "humidity": 43,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T13:24:40.791Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 24.8
+      },
+      {
+        "key": "t2",
+        "value": 8.4375
+      },
+      {
+        "key": "t3",
+        "value": 21.399999618530273
+      }
+    ]
+  },
+  {
+    "_id": "5aba412d704d812b203a6a19",
+    "pressure": 1009.9513032913366,
+    "light": 73,
+    "humidity": 42.20000076293945,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T13:03:41.052Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 24.7
+      },
+      {
+        "key": "t2",
+        "value": 5.5625
+      },
+      {
+        "key": "t3",
+        "value": 21.5
+      }
+    ]
+  },
+  {
+    "_id": "5aba3c41704d812b203a6a13",
+    "pressure": 1010.1749819071782,
+    "light": 70,
+    "humidity": 41.20000076293945,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T12:42:41.311Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 24.7
+      },
+      {
+        "key": "t2",
+        "value": 6
+      },
+      {
+        "key": "t3",
+        "value": 21.399999618530273
+      }
+    ]
+  },
+  {
+    "_id": "5aba3754704d812b203a6a0d",
+    "pressure": 1010.2886574384192,
+    "light": 55,
+    "humidity": 43.099998474121094,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T12:21:40.572Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 24.7
+      },
+      {
+        "key": "t2",
+        "value": 5.5
+      },
+      {
+        "key": "t3",
+        "value": 21.299999237060547
+      }
+    ]
+  },
+  {
+    "_id": "5aba3268704d812b203a6a07",
+    "pressure": 1010.3534411201947,
+    "light": 123,
+    "humidity": 42.29999923706055,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T12:00:40.831Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 24.6
+      },
+      {
+        "key": "t2",
+        "value": 6.875
+      },
+      {
+        "key": "t3",
+        "value": 21.399999618530273
+      }
+    ]
+  },
+  {
+    "_id": "5aba2d7d704d812b203a6a01",
+    "pressure": 1010.4356621497775,
+    "light": 112,
+    "humidity": 43.099998474121094,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T11:39:41.093Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 24.4
+      },
+      {
+        "key": "t2",
+        "value": 5.1875
+      },
+      {
+        "key": "t3",
+        "value": 21.100000381469727
+      }
+    ]
+  },
+  {
+    "_id": "5aba2890704d812b203a69fb",
+    "pressure": 1010.771662592276,
+    "light": 96,
+    "humidity": 42.400001525878906,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T11:18:40.350Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 24.2
+      },
+      {
+        "key": "t2",
+        "value": 4.6875
+      },
+      {
+        "key": "t3",
+        "value": 20.899999618530273
+      }
+    ]
+  },
+  {
+    "_id": "5aba23a4704d812b203a69f5",
+    "pressure": 1010.6400957197836,
+    "light": 112,
+    "humidity": 43.70000076293945,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T10:57:40.605Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 24.1
+      },
+      {
+        "key": "t2",
+        "value": 5.5625
+      },
+      {
+        "key": "t3",
+        "value": 20.799999237060547
+      }
+    ]
+  },
+  {
+    "_id": "5aba1eb8704d812b203a69ef",
+    "pressure": 1010.7772183202794,
+    "light": 90,
+    "humidity": 43.70000076293945,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T10:36:40.884Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 23.8
+      },
+      {
+        "key": "t2",
+        "value": 4.8125
+      },
+      {
+        "key": "t3",
+        "value": 20.5
+      }
+    ]
+  },
+  {
+    "_id": "5aba19cc704d812b203a69e9",
+    "pressure": 1010.6506662099725,
+    "light": 70,
+    "humidity": 42.29999923706055,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T10:15:40.122Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 23.6
+      },
+      {
+        "key": "t2",
+        "value": 4.5625
+      },
+      {
+        "key": "t3",
+        "value": 20.399999618530273
+      }
+    ]
+  },
+  {
+    "_id": "5aba14e0704d812b203a69e3",
+    "pressure": 1010.7859597484396,
+    "light": 52,
+    "humidity": 42.20000076293945,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T09:54:40.416Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 23.5
+      },
+      {
+        "key": "t2",
+        "value": 3.3125
+      },
+      {
+        "key": "t3",
+        "value": 20.299999237060547
+      }
+    ]
+  },
+  {
+    "_id": "5aba0ff4704d812b203a69dd",
+    "pressure": 1010.8163662930893,
+    "light": 37,
+    "humidity": 41.70000076293945,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T09:33:40.741Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 23.4
+      },
+      {
+        "key": "t2",
+        "value": 3
+      },
+      {
+        "key": "t3",
+        "value": 20.200000762939453
+      }
+    ]
+  },
+  {
+    "_id": "5aba0b08704d812b203a69d7",
+    "pressure": 1010.787904440406,
+    "light": 26,
+    "humidity": 41.099998474121094,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T09:12:40.071Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 23.3
+      },
+      {
+        "key": "t2",
+        "value": 2.5
+      },
+      {
+        "key": "t3",
+        "value": 20.100000381469727
+      }
+    ]
+  },
+  {
+    "_id": "5aba061ca9b60cd913e2542b",
+    "pressure": 1010.6985472192422,
+    "light": 31,
+    "humidity": 29.399999618530273,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T08:51:40.402Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 23.2
+      },
+      {
+        "key": "t2",
+        "value": 2.125
+      },
+      {
+        "key": "t3",
+        "value": 40
+      }
+    ]
+  },
+  {
+    "_id": "5aba012fa9b60cd913e25425",
+    "pressure": 1010.6231733238873,
+    "light": 22,
+    "humidity": 40.70000076293945,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T08:30:39.671Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 23.1
+      },
+      {
+        "key": "t2",
+        "value": 2.25
+      },
+      {
+        "key": "t3",
+        "value": 20
+      }
+    ]
+  },
+  {
+    "_id": "5ab9fc43a9b60cd913e2541f",
+    "pressure": 1010.5150516090828,
+    "light": 19,
+    "humidity": 41.20000076293945,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T08:09:39.929Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 23.1
+      },
+      {
+        "key": "t2",
+        "value": 1.6875
+      },
+      {
+        "key": "t3",
+        "value": 20
+      }
+    ]
+  },
+  {
+    "_id": "5ab9f758a9b60cd913e25419",
+    "pressure": 1010.3504053483817,
+    "light": 24,
+    "humidity": 41.900001525878906,
+    "location": "office ZA",
+    "locationId": "location_001",
+    "__v": 0,
+    "timestamp": "2018-03-27T07:48:40.186Z",
+    "temperature": [
+      {
+        "key": "t1",
+        "value": 23
+      },
+      {
+        "key": "t2",
+        "value": 1.4375
+      },
+      {
+        "key": "t3",
+        "value": 20
+      }
+    ]
+  }
+]

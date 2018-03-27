@@ -37,7 +37,7 @@ module.exports = function () {
         });
     };
 
-    var _find12Hour = function _find12Hour(pointId) {
+    var _find12Hour = function _find12Hour(pointId, maxData) {
         var date = new Date();
         return new Promise(function (resolve, reject) {
             var _start = function () {

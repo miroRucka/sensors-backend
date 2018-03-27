@@ -18,6 +18,7 @@ var upload = multer({dest: 'uploads/'});
 var fs = require('fs');
 var Client = require('node-rest-client').Client;
 var client = new Client();
+var _ = require('lodash');
 
 var ntAddress = "http://barek.ddns.net:8080";
 //var ntAddress = "http://192.168.1.25:9615";
@@ -97,9 +98,9 @@ var DefaultResponse = function (res) {
 };
 
 
-//router.all("/*", securityFilter, function (req, res, next) {
-//    next();
-//});
+router.all("/*", securityFilter, function (req, res, next) {
+    next();
+});
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', function (req, res) {
@@ -228,22 +229,46 @@ router.get("/nt", function (req, res) {
         }
     };
     var req = client.get(ntAddress, args, function (data, response) {
-        res.end(JSON.stringify(data));
+        res.json(data);
     });
     req.on('requestTimeout', function (req) {
         req.abort();
-        res.status(500).send({ error: 'timeout' });
+        res.status(500).send({error: 'timeout'});
     });
 
     req.on('responseTimeout', function (res) {
-        res.status(500).send({ error: 'timeout' });
+        res.status(500).send({error: 'timeout'});
     });
     req.on('error', function (err) {
-        res.status(500).send({ error: 'erro' });
+        res.status(500).send({error: 'erro'});
     });
 });
 
 app.use('/api', router);
+
+var grafanaApi = express.Router();
+var grafanaService = require('./service/grafanaService');
+
+grafanaApi.get('/temperature/:pointId/:key/search', function (req, res) {
+    pointIdValidator(req, res);
+    var response = new DefaultResponse(res);
+    var pointId = req.params.pointId;
+    var temperaturesKey = JSON.parse(req.params.key);
+    sensorService.find12Hour(pointId, 500).then(function (data) {
+        //var data = require('./outputs/12hours');
+        var result = [];
+        _.forEach(temperaturesKey, function (tKey) {
+            var datapoints = grafanaService(data, tKey);
+            result.push({
+                target: "Teplota " + tKey + " °C",
+                datapoints: datapoints
+            });
+        });
+        res.json(result);
+    }, response.err);
+});
+
+app.use('/grafana', grafanaApi);
 
 
 logger.info("our web server started, congratulation and have a nice day for every one - port:" + port + " enviroment develop? " + env);
