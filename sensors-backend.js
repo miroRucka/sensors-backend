@@ -249,11 +249,11 @@ app.use('/api', router);
 var grafanaApi = express.Router();
 var grafanaService = require('./service/grafanaService');
 
-grafanaApi.get('/temperature/:pointId/:key/search', function (req, res) {
+grafanaApi.post('/temperature/:pointId/search', function (req, res) {
     pointIdValidator(req, res);
     var response = new DefaultResponse(res);
     var pointId = req.params.pointId;
-    var temperaturesKey = JSON.parse(req.params.key);
+    var temperaturesKey = ['t1', 't2', 't3'];//JSON.parse(req.params.key);
     sensorService.find12Hour(pointId, 500).then(function (data) {
         //var data = require('./outputs/12hours');
         var result = [];
