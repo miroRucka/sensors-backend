@@ -249,7 +249,7 @@ app.use('/api', router);
 var grafanaApi = express.Router();
 var grafanaService = require('./service/grafanaService');
 
-grafanaApi.post('/temperature/:pointId/search', function (req, res) {
+var grafanaHttpHandler = function (req, res) {
     pointIdValidator(req, res);
     var response = new DefaultResponse(res);
     var pointId = req.params.pointId;
@@ -266,7 +266,9 @@ grafanaApi.post('/temperature/:pointId/search', function (req, res) {
         });
         res.json(result);
     }, response.err);
-});
+};
+grafanaApi.post('/temperature/:pointId/search', grafanaHttpHandler);
+grafanaApi.get('/temperature/:pointId/search', grafanaHttpHandler);
 
 app.use('/grafana', grafanaApi);
 
