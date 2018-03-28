@@ -269,6 +269,7 @@ var grafanaHttpHandler = function (req, res) {
 };
 grafanaApi.post('/temperature/:pointId/search', grafanaHttpHandler);
 grafanaApi.get('/temperature/:pointId/search', grafanaHttpHandler);
+grafanaApi.post('/temperature/:pointId/query', grafanaHttpHandler);
 
 app.use('/grafana', grafanaApi);
 
