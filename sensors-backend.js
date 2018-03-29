@@ -249,11 +249,12 @@ app.use('/api', router);
 var grafanaApi = express.Router();
 var grafanaService = require('./service/grafanaService');
 
-grafanaApi.get('/temperature/:pointId/:key/search', function (req, res) {
-    pointIdValidator(req, res);
+var httpGrafanaHandler = function (req, res) {
+    //pointIdValidator(req, res);
     var response = new DefaultResponse(res);
-    var pointId = req.params.pointId;
-    var temperaturesKey = JSON.parse(req.params.key);
+    var target = JSON.parse(req.body.targets[0].target) || {};
+    var pointId = target.pointId;
+    var temperaturesKey = target.temperatureKeys;
     sensorService.find12Hour(pointId, 500).then(function (data) {
         //var data = require('./outputs/12hours');
         var result = [];
@@ -266,9 +267,15 @@ grafanaApi.get('/temperature/:pointId/:key/search', function (req, res) {
         });
         res.json(result);
     }, response.err);
-});
+};
+grafanaApi.get('/temperature/search', httpGrafanaHandler);
+grafanaApi.post('/temperature/search', httpGrafanaHandler);
+grafanaApi.get('/temperature/query', httpGrafanaHandler);
+grafanaApi.post('/temperature/query', httpGrafanaHandler);
 
 app.use('/grafana', grafanaApi);
 
 
 logger.info("our web server started, congratulation and have a nice day for every one - port:" + port + " enviroment develop? " + env);
+
+var a = {"pointId":"location_001","temperatureKeys":["t1","t2","t3"]}
