@@ -63,15 +63,12 @@ module.exports = function () {
     };
 
     var _findRange = function _findRange(pointId, from, to) {
-        logger.info(from);
-        logger.info(to);
-        logger.info(new Date());
         return new Promise(function (resolve, reject) {
             var query = {
                 timestamp: {'$gte': from, '$lt': to},
                 locationId: {'$eq': pointId}
             };
-            Sensors.find(query, {}, {sort: {'timestamp': -1}}, function (err, data) {
+            Sensors.find(query, {}, {sort: {'timestamp': 1}}, function (err, data) {
                 if (err) {
                     reject(err);
                 } else {
