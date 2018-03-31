@@ -72,7 +72,8 @@ module.exports = function () {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(data);
+                    var reduceDataTo = 1000;
+                    resolve(_reduceData(data, reduceDataTo));
                 }
             });
         });
