@@ -277,5 +277,3 @@ app.use('/grafana', grafanaApi);
 
 
 logger.info("our web server started, congratulation and have a nice day for every one - port:" + port + " enviroment develop? " + env);
-
-var a = {"pointId":"location_001","temperatureKeys":["t1","t2","t3"]}
