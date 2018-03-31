@@ -18,11 +18,10 @@ module.exports = {
     otherDimension: function (data, dimension) {
         return _.map(data, function (r) {
             logger.info("dimension", dimension);
-            logger.info("record", r);
             var result = r[dimension];
             logger.info("result", result);
             var timestamp = new Date(r.timestamp);
-            return [_.isEmpty(result) ? 0 : result, timestamp.getTime()]
+            return [result, timestamp.getTime()]
         });
     },
     last: function (data, dimension, temperatureKey) {
@@ -31,7 +30,7 @@ module.exports = {
             result = result[temperatureKey].value;
         }
         var timestamp = new Date(data.timestamp);
-        return [_.isEmpty(result) ? 0 : result, timestamp.getTime()]
+        return [result, timestamp.getTime()]
     }
 };
 
