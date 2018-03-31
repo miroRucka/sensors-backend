@@ -23,15 +23,12 @@ module.exports = {
         });
     },
     last: function (data, dimension, temperatureKey) {
-        logger.info(dimension, temperatureKey);
         var result = data[dimension];
         logger.info(result);
-        logger.info(dimension.indexOf('temperature'));
         if (dimension.indexOf('temperature') !== -1) {
             result = _.find(result, function (o) {
                 return o.key === temperatureKey;
-            });
-            logger.info('this is a temperature', result);
+            }).value;
         }
         var timestamp = new Date(data.timestamp);
         return [[result, timestamp.getTime()]]
