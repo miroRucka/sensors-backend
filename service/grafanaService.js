@@ -28,7 +28,7 @@ module.exports = {
             result = result[temperatureKey].value;
         }
         var timestamp = new Date(data.timestamp);
-        return [result, timestamp.getTime()]
+        return [[result, timestamp.getTime()]]
     }
 };
 
