@@ -2,6 +2,7 @@
  * Created by mito on 27. 3. 2018.
  */
 var _ = require('lodash');
+var logger = require('../config/logging');
 
 module.exports = {
     temperatures: function (data, temperatureKey) {
@@ -16,7 +17,10 @@ module.exports = {
     },
     otherDimension: function (data, dimension) {
         return _.map(data, function (r) {
+            logger.info("dimension", dimension);
+            logger.info("record", r);
             var result = r[dimension];
+            logger.info("result", result);
             var timestamp = new Date(r.timestamp);
             return [_.isEmpty(result) ? 0 : result, timestamp.getTime()]
         });
