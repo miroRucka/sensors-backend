@@ -253,9 +253,11 @@ var httpGrafanaHandler = function (req, res) {
     //pointIdValidator(req, res);
     var response = new DefaultResponse(res);
     var target = JSON.parse(req.body.targets[0].target) || {};
+    var range = req.body.range;
     var pointId = target.pointId;
     var temperaturesKey = target.temperatureKeys;
-    sensorService.find12Hour(pointId, 500).then(function (data) {
+    if (!exists(pointId) || !exists(temperaturesKey) || !exists(range.from) || !exists(range.to)) res.sendStatus(422);
+    sensorService.findRange(pointId, new Date(range.from), new Date(range.to)).then(function (data) {
         //var data = require('./outputs/12hours');
         var result = [];
         _.forEach(temperaturesKey, function (tKey) {

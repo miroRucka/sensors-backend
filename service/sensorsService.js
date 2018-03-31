@@ -62,6 +62,22 @@ module.exports = function () {
         });
     };
 
+    var _findRange = function _findRange(pointId, from, to) {
+        return new Promise(function (resolve, reject) {
+            var query = {
+                timestamp: {'$gte': from, '$lt': to},
+                locationId: {'$eq': pointId}
+            };
+            Sensors.find(query, {}, {sort: {'timestamp': -1}}, function (err, data) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(data);
+                }
+            });
+        });
+    };
+
     var _findToday = function _findToday(pointId) {
         return new Promise(function (resolve, reject) {
             var _start = function () {
@@ -238,6 +254,7 @@ module.exports = function () {
         find12Hour: _find12Hour,
         findToday: _findToday,
         findMonth: _findMonth,
+        findRange: _findRange,
         findTimeIntervalAvg: _findTimeIntervalAvg,
         count: _count,
         findAllPointIds: _findAllPointIds
