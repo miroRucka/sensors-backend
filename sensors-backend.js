@@ -308,14 +308,14 @@ var httpGrafanaHandlerDimensions = function (req, res) {
 grafanaApi.get('/dimension/query', httpGrafanaHandlerDimensions);
 grafanaApi.post('/dimension/query', httpGrafanaHandlerDimensions);
 
-var httpGrafanaHandlerLastDimensions = function (req, res) {
+var httpGrafanaHandlerLastDimension = function (req, res) {
     var response = new DefaultResponse(res);
     var target = JSON.parse(req.body.targets[0].target) || {};
     var range = req.body.range;
     var pointId = target.pointId;
     var dimension = target.dimension;
     var temperaturesKey = target.temperatureKey;
-    if (!exists(pointId) || !exists(dimensions) || !exists(range.from) || !exists(range.to)) res.sendStatus(422);
+    if (!exists(pointId) || !exists(dimension) || !exists(range.from) || !exists(range.to)) res.sendStatus(422);
     sensorService.findLast(pointId, new Date(range.from), new Date(range.to)).then(function (data) {
         var result = [];
         var datapoints = grafanaService.last(_.first(data), dimension, temperaturesKey);
@@ -327,8 +327,8 @@ var httpGrafanaHandlerLastDimensions = function (req, res) {
     }, response.err);
 };
 
-grafanaApi.get('/dimension/last/query', httpGrafanaHandlerLastDimensions);
-grafanaApi.post('/dimension/last/query', httpGrafanaHandlerLastDimensions);
+grafanaApi.get('/dimension/last/query', httpGrafanaHandlerLastDimension);
+grafanaApi.post('/dimension/last/query', httpGrafanaHandlerLastDimension);
 
 app.use('/grafana', grafanaApi);
 

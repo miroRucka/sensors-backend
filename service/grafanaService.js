@@ -17,9 +17,7 @@ module.exports = {
     },
     otherDimension: function (data, dimension) {
         return _.map(data, function (r) {
-            logger.info("dimension", dimension);
             var result = r[dimension];
-            logger.info("result", result);
             var timestamp = new Date(r.timestamp);
             return [result, timestamp.getTime()]
         });
