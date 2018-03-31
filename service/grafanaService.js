@@ -26,6 +26,7 @@ module.exports = {
         logger.info(dimension, temperatureKey);
         var result = data[dimension];
         logger.info(result);
+        logger.info(dimension.indexOf('temperature'));
         if (dimension.indexOf('temperature') !== -1) {
             result = result[temperatureKey].value;
             logger.info('this is a temperature', result);
