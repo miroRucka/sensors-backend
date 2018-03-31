@@ -63,6 +63,8 @@ module.exports = function () {
     };
 
     var _findRange = function _findRange(pointId, from, to) {
+        logger.info(from);
+        logger.info(to);
         return new Promise(function (resolve, reject) {
             var query = {
                 timestamp: {'$gte': from, '$lt': to},
