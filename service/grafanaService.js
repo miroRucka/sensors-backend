@@ -23,9 +23,12 @@ module.exports = {
         });
     },
     last: function (data, dimension, temperatureKey) {
+        logger.info(dimension, temperatureKey);
         var result = data[dimension];
-        if (_.isArray(result) && dimension.indexOf('temperature') !== -1) {
+        logger.info(result);
+        if (dimension.indexOf('temperature') !== -1) {
             result = result[temperatureKey].value;
+            logger.info('this is a temperature', result);
         }
         var timestamp = new Date(data.timestamp);
         return [[result, timestamp.getTime()]]
