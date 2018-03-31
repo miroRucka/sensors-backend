@@ -28,7 +28,9 @@ module.exports = {
         logger.info(result);
         logger.info(dimension.indexOf('temperature'));
         if (dimension.indexOf('temperature') !== -1) {
-            result = result[temperatureKey].value;
+            result = _.find(result, function (o) {
+                return o.key === temperatureKey;
+            });
             logger.info('this is a temperature', result);
         }
         var timestamp = new Date(data.timestamp);
