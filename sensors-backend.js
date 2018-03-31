@@ -228,16 +228,29 @@ router.get("/nt", function (req, res) {
             timeout: 3500
         }
     };
+    var result = [];
+    var time = (new Date()).getTime();
+    var target = "Nízka tarifa aktívna";
+    var down = {
+        target: target,
+        datapoints: ["DOWN", time]
+    };
     var req = client.get(ntAddress, args, function (data, response) {
-        res.json(data);
+        result.push({
+            target: target,
+            datapoints: ["UP", time]
+        });
+        res.json(result);
     });
     req.on('requestTimeout', function (req) {
         req.abort();
-        res.status(500).send({error: 'timeout'});
+        result.push(down);
+        res.json(result);
     });
 
     req.on('responseTimeout', function (res) {
-        res.status(500).send({error: 'timeout'});
+        result.push(down);
+        res.json(result);
     });
     req.on('error', function (err) {
         res.status(500).send({error: 'erro'});
@@ -249,8 +262,7 @@ app.use('/api', router);
 var grafanaApi = express.Router();
 var grafanaService = require('./service/grafanaService');
 
-var httpGrafanaHandler = function (req, res) {
-    //pointIdValidator(req, res);
+var httpGrafanaHandlerTemperature = function (req, res) {
     var response = new DefaultResponse(res);
     var target = JSON.parse(req.body.targets[0].target) || {};
     var range = req.body.range;
@@ -261,7 +273,7 @@ var httpGrafanaHandler = function (req, res) {
         //var data = require('./outputs/12hours');
         var result = [];
         _.forEach(temperaturesKey, function (tKey) {
-            var datapoints = grafanaService(data, tKey);
+            var datapoints = grafanaService.temperatures(data, tKey);
             result.push({
                 target: "Teplota " + tKey + " °C",
                 datapoints: datapoints
@@ -270,10 +282,53 @@ var httpGrafanaHandler = function (req, res) {
         res.json(result);
     }, response.err);
 };
-grafanaApi.get('/temperature/search', httpGrafanaHandler);
-grafanaApi.post('/temperature/search', httpGrafanaHandler);
-grafanaApi.get('/temperature/query', httpGrafanaHandler);
-grafanaApi.post('/temperature/query', httpGrafanaHandler);
+grafanaApi.get('/temperature/query', httpGrafanaHandlerTemperature);
+grafanaApi.post('/temperature/query', httpGrafanaHandlerTemperature);
+
+var httpGrafanaHandlerDimensions = function (req, res) {
+    var response = new DefaultResponse(res);
+    var target = JSON.parse(req.body.targets[0].target) || {};
+    var range = req.body.range;
+    var pointId = target.pointId;
+    var dimensions = target.dimensions;
+    if (!exists(pointId) || !exists(dimensions) || !exists(range.from) || !exists(range.to)) res.sendStatus(422);
+    sensorService.findRange(pointId, new Date(range.from), new Date(range.to)).then(function (data) {
+        //var data = require('./outputs/12hours');
+        var result = [];
+        _.forEach(dimensions, function (dimension) {
+            var datapoints = grafanaService.otherDimension(data, dimension);
+            result.push({
+                target: dimension,
+                datapoints: datapoints
+            });
+        });
+        res.json(result);
+    }, response.err);
+};
+grafanaApi.get('/dimension/query', httpGrafanaHandlerDimensions);
+grafanaApi.post('/dimension/query', httpGrafanaHandlerDimensions);
+
+var httpGrafanaHandlerLastDimensions = function (req, res) {
+    var response = new DefaultResponse(res);
+    var target = JSON.parse(req.body.targets[0].target) || {};
+    var range = req.body.range;
+    var pointId = target.pointId;
+    var dimension = target.dimension;
+    var temperaturesKey = target.temperatureKey;
+    if (!exists(pointId) || !exists(dimensions) || !exists(range.from) || !exists(range.to)) res.sendStatus(422);
+    sensorService.findLast(pointId, new Date(range.from), new Date(range.to)).then(function (data) {
+        var result = [];
+        var datapoints = grafanaService.last(_.first(data), dimension, temperaturesKey);
+        result.push({
+            target: dimension,
+            datapoints: datapoints
+        });
+        res.json(result);
+    }, response.err);
+};
+
+grafanaApi.get('/dimension/last/query', httpGrafanaHandlerLastDimensions);
+grafanaApi.post('/dimension/last/query', httpGrafanaHandlerLastDimensions);
 
 app.use('/grafana', grafanaApi);
 
