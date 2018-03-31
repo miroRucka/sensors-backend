@@ -330,7 +330,7 @@ var httpGrafanaHandlerLastDimension = function (req, res) {
 grafanaApi.get('/dimension/last/query', httpGrafanaHandlerLastDimension);
 grafanaApi.post('/dimension/last/query', httpGrafanaHandlerLastDimension);
 
-app.use('/grafana', grafanaApi);
+app.use('/grf', grafanaApi);
 
 
 logger.info("our web server started, congratulation and have a nice day for every one - port:" + port + " enviroment develop? " + env);
