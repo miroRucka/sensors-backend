@@ -233,17 +233,16 @@ var ntHandler = function (req, res) {
     var target = "Nízka tarifa aktívna";
     var down = {
         target: target,
-        datapoints: ["DOWN", time]
+        datapoints: [["DOWN", time]]
     };
-    var req = client.get(ntAddress, args, function (data, response) {
+    var req = client.get(ntAddress, args, function () {
         result.push({
             target: target,
-            datapoints: ["UP", time]
+            datapoints: [["UP", time]]
         });
         res.json(result);
     });
     req.on('requestTimeout', function (req) {
-        req.abort();
         result.push(down);
         res.json(result);
     });
@@ -253,7 +252,8 @@ var ntHandler = function (req, res) {
         res.json(result);
     });
     req.on('error', function (err) {
-        res.status(500).send({error: 'erro'});
+        result.push(down);
+        res.json(result);
     });
 };
 router.get("/nt", ntHandler);
