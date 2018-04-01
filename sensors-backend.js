@@ -331,7 +331,7 @@ var httpGrafanaHandlerLastDimension = function (req, res) {
 grafanaApi.get('/dimension/last/query', httpGrafanaHandlerLastDimension);
 grafanaApi.post('/dimension/last/query', httpGrafanaHandlerLastDimension);
 
-grafanaApi.post("/nt", ntHandler);
+grafanaApi.post("/nt/query", ntHandler);
 
 app.use('/grafana', grafanaApi);
 
