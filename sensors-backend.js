@@ -219,7 +219,7 @@ app.get('/sensors/photo/:photoId', function (req, res) {
     photoService.readPhoto(photoId).then(ok, response.err);
 });
 
-router.get("/nt", function (req, res) {
+var ntHandler = function (req, res) {
     var args = {
         requestConfig: {
             timeout: 3500,
@@ -255,7 +255,8 @@ router.get("/nt", function (req, res) {
     req.on('error', function (err) {
         res.status(500).send({error: 'erro'});
     });
-});
+};
+router.get("/nt", ntHandler);
 
 app.use('/api', router);
 
@@ -329,6 +330,8 @@ var httpGrafanaHandlerLastDimension = function (req, res) {
 
 grafanaApi.get('/dimension/last/query', httpGrafanaHandlerLastDimension);
 grafanaApi.post('/dimension/last/query', httpGrafanaHandlerLastDimension);
+
+grafanaApi.post("/nt", ntHandler);
 
 app.use('/grafana', grafanaApi);
 
