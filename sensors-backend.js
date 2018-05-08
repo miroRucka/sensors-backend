@@ -22,7 +22,7 @@ var _ = require('lodash');
 var logService = require("./service/logService")();
 
 var ntAddress = "http://barek.ddns.net:8080";
-var interval = 10000;//60000;
+var interval = 60000;
 //var ntAddress = "http://192.168.1.25:9615";
 
 
