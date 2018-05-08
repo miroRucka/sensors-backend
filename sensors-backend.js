@@ -19,8 +19,10 @@ var fs = require('fs');
 var Client = require('node-rest-client').Client;
 var client = new Client();
 var _ = require('lodash');
+var logService = require("./service/logService")();
 
 var ntAddress = "http://barek.ddns.net:8080";
+var interval = 10000;//60000;
 //var ntAddress = "http://192.168.1.25:9615";
 
 
@@ -330,7 +332,28 @@ var httpGrafanaHandlerLastDimension = function (req, res) {
 grafanaApi.get('/dimension/last/query', httpGrafanaHandlerLastDimension);
 grafanaApi.post('/dimension/last/query', httpGrafanaHandlerLastDimension);
 
+var httpGrafanaHandlerLog = function (req, res) {
+    var response = new DefaultResponse(res);
+    var range = req.body.range;
+    if (!exists(range.from) || !exists(range.to)) res.sendStatus(422);
+    logService.findRange(new Date(range.from), new Date(range.to)).then(function (data) {
+        var dimension = 'log';
+        var result = [];
+        var datapoints = grafanaService.otherDimension(data, dimension);
+        result.push({
+            target: dimension,
+            datapoints: datapoints
+        });
+        res.json(result);
+    }, response.err);
+};
+grafanaApi.get('/log/query', httpGrafanaHandlerLog);
+grafanaApi.post('/log/query', httpGrafanaHandlerLog);
+
 app.use('/grafana', grafanaApi);
+
+
+logService.startLog(ntAddress, interval);
 
 
 logger.info("our web server started, congratulation and have a nice day for every one - port:" + port + " enviroment develop? " + env);
